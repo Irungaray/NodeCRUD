@@ -11,5 +11,5 @@ exports.error = function (req, res, message, status, errDetails) {
         body: ''
     });
 
-    console.error('[response error]' + errDetails);
+    console.error('[response error] ' + errDetails);
 }

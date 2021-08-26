@@ -4,21 +4,27 @@ const router = express.Router();
 
 // Internal modules
 const response = require('../../network/response');
+const controller = require('./controller');
 
 router.get('/', function (req, res) {
-        res.header({
-            'custom-header': 'Our personal value'
-        })
-        response.success(req, res, 'Message list');
+        controller.getMessages()
+            .then((messageList) => {
+                response.success(req, res, messageList, 200);
+            })
+            .catch(e => {
+                response.error(req, res, 'Unexpected Error', 500, e)
+            })
     }
 )
 
 router.post('/', function (req, res) {
-        if (req.query.error == 'ok') {
-            response.error(req, res, 'Unexpected error', 500, 'Just a simulation')
-        }
-
-        response.success(req, res, 'Message created', 201)
+        controller.addMessage(req.body.user, req.body.message)
+            .then((fullMessage) => {
+                response.success(req, res, fullMessage, 201);
+            })
+            .catch(() => {
+                response.error(req, res, 'Unexpected error', 500, 'Error on controller');
+            })
     }
 )
 
