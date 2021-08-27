@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
             response.success(req, res, messageList, 200);
         })
         .catch(e => {
-            response.error(req, res, 'Error getting message', 500, e)
+            response.error(req, res, 'Error getting messages', 500, e)
         })
     }
 )
