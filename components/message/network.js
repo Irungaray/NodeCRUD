@@ -22,8 +22,9 @@ router.post('/', function (req, res) {
             .then((fullMessage) => {
                 response.success(req, res, fullMessage, 201);
             })
-            .catch(() => {
-                response.error(req, res, 'Unexpected error', 500, 'Error on controller');
+            .catch((e) => {
+                // response.error(req, res, 'Unexpected error', 500, e);
+                console.log(e);
             })
     }
 )
