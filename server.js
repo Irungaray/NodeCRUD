@@ -1,12 +1,15 @@
 // External modules
 const express = require('express');
 const bodyParser = require('body-parser');
+require("dotenv").config({ path: ".env" });
 
 // Internal modules
+const db = require('./db');
+const dbUri = process.env.DB_URI;
 const router = require('./network/routes');
 
-// Port
-const PORT = 3000;
+// Initialize DB
+db(dbUri)
 
 // App uses
 const app = express();
@@ -17,5 +20,5 @@ router(app)
 
 app.use('/app', express.static('public'));
 
-app.listen(PORT);
-console.log(`App listening on http://localhost:${PORT}`);
+app.listen(process.env.PORT);
+console.log(`App listening on http://localhost:${process.env.PORT}`);
