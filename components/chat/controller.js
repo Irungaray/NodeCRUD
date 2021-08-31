@@ -1,47 +1,21 @@
 const store = require('./store');
 
-function getChatsById(id) {
-    return new Promise(async (resolve, reject) => {
-        if (!id) {
-            console.log('No Id');
-            return reject('Incorrect data');
-        }
-
-        const response = await store.listById(id);
-        resolve(response);
-    })
-}
-
 function addChat(users) {
-    return new Promise((resolve, reject) => {
-        if (!users || !Array.isArray(users)) {
-            console.log('Invalid user list');
-            return reject('Incorrect data');
-        }
+    if (!users || !Array.isArray(users)) {
+        return Promise.reject('Invalid user list');
+    }
 
-        const newChat = {
-            users,
-        }
-
-        store.add(newChat);
-        resolve(newChat);
-    })
+    const chat = {
+        users: users,
+    };
+    return store.add(chat);
 }
 
-function deleteChat(id) {
-    return new Promise(async (resolve, reject) => {
-        if(!id) {
-            console.log('No id');
-            return reject('Incorrect data');
-        }
-
-        const response = await store.delete(id);
-        resolve(response);
-    })
+function listChats(userId) {
+    return store.list(userId);
 }
 
 module.exports = {
-    getChatsById,
     addChat,
-    deleteChat,
-};
+    listChats,
+}

@@ -18,15 +18,16 @@ function getMessageById(id) {
     })
 }
 
-function addMessage(user, message) {
+function addMessage(user, message, chat) {
     return new Promise((resolve, reject) => {
-        if (!user || !message) {
+        if (!user || !message || !chat) {
             console.log('No user or message');
             return reject('Incorrect data');
         }
 
         const fullMessage = {
             user: user,
+            chat: chat,
             message: message,
             date: new Date()
         }

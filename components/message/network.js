@@ -31,7 +31,7 @@ router.get('/:id', function (req, res) {
 )
 
 router.post('/', function (req, res) {
-    controller.addMessage(req.body.user, req.body.message)
+    controller.addMessage(req.body.user, req.body.chat, req.body.message)
         .then((fullMessage) => {
             response.success(req, res, fullMessage, 200);
         })

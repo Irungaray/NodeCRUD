@@ -1,17 +1,20 @@
-// External modules
-const model = require('./model');
-
-// Internal modules
 const Model = require('./model');
 
-function getChatsById(userId) {
+function addChat(chat) {
+    const myChat = new Model(chat);
+    return myChat.save();
+}
+
+function listChats(userId) {
 	return new Promise((resolve, reject) => {
 		let filter = {};
 		if (userId) {
-			filter = userId
+			filter = {
+				users: userId,
+			}
 		}
-
-		Model.findById(filter)
+	    
+	    Model.find(filter)
 	    	.populate('users')
 	    	.exec((err, populated) => {
 	    		if (err) {
@@ -24,28 +27,7 @@ function getChatsById(userId) {
 	});
 }
 
-// function getChatsById(userId) {
-// 	const chats = Model.findById(userId);
-
-// 	console.log(chats);
-
-// 	return chats;
-// }
-
-async function addChat(chat) {
-    const newChat = new Model(chat);
-
-    return newChat.save();
-}
-
-async function deleteChat(id) {
-    await model.findByIdAndDelete(id);
-
-    return;
-}
-
 module.exports = {
-    listById: getChatsById,
     add: addChat,
-    delete: deleteChat
+    list: listChats,
 }
